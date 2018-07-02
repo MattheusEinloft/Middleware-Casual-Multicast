@@ -30,15 +30,16 @@ public class ChatRoom extends javax.swing.JFrame {
      */
     protected MulticastSocket socket = null;
     protected byte[] buf = new byte[256];
-    private String usrname = "Anonimous";
+    private String usrname;
     
-    public ChatRoom(){
+    public ChatRoom(String usrname, String IP){
         initComponents();
         //MulticastReceiver receptor = new MulticastReceiver();
         //InetAddress group = InetAddress.getByName("225.0.0.0");  // In IPv4, any address between 224.0.0.0 to 239.255.255.255 can be used as a multicast address.
         //receptor.start();
         
-        
+        jTextField2.setText(usrname);
+        jTextField2.setEditable(false);
         jTextPane1.setEditable(false);
         jTextPane1.setText("Bem-vindo à sala de chat!");
         
@@ -48,7 +49,7 @@ public class ChatRoom extends javax.swing.JFrame {
                 MulticastReceiver receiver = null;
                 while(true){
                     try {
-                        receiver = new MulticastReceiver(InetAddress.getByName("225.0.0.0"));
+                        receiver = new MulticastReceiver(InetAddress.getByName(IP));
                     } catch (UnknownHostException ex) {
                         Logger.getLogger(ChatRoom.class.getName()).log(Level.SEVERE, null, ex);
                     }      
@@ -156,7 +157,7 @@ public class ChatRoom extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -209,7 +210,7 @@ public class ChatRoom extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChatRoom().setVisible(true);
+                //new ChatRoom().setVisible(true);
             }
         });
     }
