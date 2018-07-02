@@ -30,6 +30,7 @@ public class ChatRoom extends javax.swing.JFrame {
      */
     protected MulticastSocket socket = null;
     protected byte[] buf = new byte[256];
+    private String usrname = "Hirt";
     
     public ChatRoom(){
         initComponents();
@@ -151,7 +152,7 @@ public class ChatRoom extends javax.swing.JFrame {
             Logger.getLogger(ChatRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            publicador.mcsend(jTextField1.getText(), InetAddress.getByName("225.0.0.0"));
+            publicador.mcsend("* " + usrname + " *" + ": " + jTextField1.getText(), InetAddress.getByName("225.0.0.0"));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ChatRoom.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

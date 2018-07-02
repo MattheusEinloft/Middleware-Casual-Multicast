@@ -20,10 +20,10 @@ public class MulticastReceiver extends Thread {
             socket = new MulticastSocket(4446);
             socket.joinGroup(group);
             
-                DatagramPacket packet = new DatagramPacket(buf, buf.length);
-                socket.receive(packet);
-                received = new String(packet.getData(), 0, packet.getLength());
-                System.out.println("Mensagem recebida = " + received);
+            DatagramPacket packet = new DatagramPacket(buf, buf.length);
+            socket.receive(packet);
+            received = new String(packet.getData(), 0, packet.getLength());
+            System.out.println("Mensagem recebida = " + received);
                 
             
             socket.leaveGroup(group);
