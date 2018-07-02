@@ -15,20 +15,17 @@ public class MulticastReceiver extends Thread {
     protected byte[] buf = new byte[256];
     private String received;
     
-    public void run(){
+    public MulticastReceiver(InetAddress group){
         try {
             socket = new MulticastSocket(4446);
-            InetAddress group = InetAddress.getByName("225.0.0.0");  // In IPv4, any address between 224.0.0.0 to 239.255.255.255 can be used as a multicast address.
             socket.joinGroup(group);
-            while(true){
+            
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
                 received = new String(packet.getData(), 0, packet.getLength());
                 System.out.println("Mensagem recebida = " + received);
-                if("end".equals(received)){
-                    break;
-                }
-            }
+                
+            
             socket.leaveGroup(group);
             socket.close();
         } catch (UnknownHostException e) {
@@ -44,7 +41,7 @@ public class MulticastReceiver extends Thread {
     }
     
     public static void main(String[] args){
-        MulticastReceiver receptor = new MulticastReceiver();
-        receptor.start();
+        //MulticastReceiver receptor = new MulticastReceiver();
+        //receptor.start();
     }
 }

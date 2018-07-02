@@ -8,6 +8,8 @@ package view;
 import causalmulticast.MulticastPublisher;
 import causalmulticast.MulticastReceiver;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -29,13 +31,34 @@ public class ChatRoom extends javax.swing.JFrame {
     protected MulticastSocket socket = null;
     protected byte[] buf = new byte[256];
     
-    public ChatRoom() {
+    public ChatRoom(){
         initComponents();
-        MulticastReceiver receptor = new MulticastReceiver();
-        receptor.start();
-        jTextPane1.setEditable(false);
-        jTextPane1.setText(receptor.getReceived());
+        //MulticastReceiver receptor = new MulticastReceiver();
+        //InetAddress group = InetAddress.getByName("225.0.0.0");  // In IPv4, any address between 224.0.0.0 to 239.255.255.255 can be used as a multicast address.
+        //receptor.start();
         
+        
+        jTextPane1.setEditable(false);
+        jTextPane1.setText("Bem-vindo à sala de chat!");
+        
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MulticastReceiver receiver = null;
+                while(true){
+                    try {
+                        receiver = new MulticastReceiver(InetAddress.getByName("225.0.0.0"));
+                    } catch (UnknownHostException ex) {
+                        Logger.getLogger(ChatRoom.class.getName()).log(Level.SEVERE, null, ex);
+                    }      
+                    
+                    jTextPane1.setText(jTextPane1.getText() + "\n" + receiver.getReceived());
+                    
+
+                }
+            }
+        });
+        t.start();                           
     }
 
     /**
@@ -53,7 +76,6 @@ public class ChatRoom extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,13 +98,6 @@ public class ChatRoom extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("ChatRoom");
 
-        jButton3.setText("publisher");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,8 +110,7 @@ public class ChatRoom extends javax.swing.JFrame {
                 .addGap(84, 84, 84)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(249, 249, 249))
                     .addGroup(layout.createSequentialGroup()
@@ -118,9 +132,7 @@ public class ChatRoom extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -130,22 +142,6 @@ public class ChatRoom extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        MulticastPublisher publicador = null;
-        try {
-            publicador = new MulticastPublisher(new DatagramSocket());
-        } catch (SocketException ex) {
-            Logger.getLogger(ChatRoom.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            publicador.mcsend("Hello", InetAddress.getByName("225.0.0.0"));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ChatRoom.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ChatRoom.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         MulticastPublisher publicador = null;
@@ -161,6 +157,8 @@ public class ChatRoom extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(ChatRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -201,7 +199,6 @@ public class ChatRoom extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
