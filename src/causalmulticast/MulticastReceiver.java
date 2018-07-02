@@ -13,6 +13,7 @@ import java.net.UnknownHostException;
 public class MulticastReceiver extends Thread {
     protected MulticastSocket socket = null;
     protected byte[] buf = new byte[256];
+    private String received;
     
     public void run(){
         try {
@@ -22,7 +23,7 @@ public class MulticastReceiver extends Thread {
             while(true){
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
-                String received = new String(packet.getData(), 0, packet.getLength());
+                received = new String(packet.getData(), 0, packet.getLength());
                 System.out.println("Mensagem recebida = " + received);
                 if("end".equals(received)){
                     break;
@@ -36,6 +37,10 @@ public class MulticastReceiver extends Thread {
             System.out.println("An IOException was caught :" + e.getMessage());
             e.printStackTrace();
         }
+    }
+    
+    public String getReceived(){
+        return received;
     }
     
     public static void main(String[] args){
