@@ -16,6 +16,8 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,17 +33,22 @@ public class ChatRoom extends javax.swing.JFrame {
     protected MulticastSocket socket = null;
     protected byte[] buf = new byte[256];
     private String usrname;
+    private String IP;
+    private SimpleDateFormat sdf;
+    private Calendar cal;
     
     public ChatRoom(String usrname, String IP){
         initComponents();
         //MulticastReceiver receptor = new MulticastReceiver();
         //InetAddress group = InetAddress.getByName("225.0.0.0");  // In IPv4, any address between 224.0.0.0 to 239.255.255.255 can be used as a multicast address.
         //receptor.start();
+        cal = Calendar.getInstance();
+        sdf = new SimpleDateFormat("HH:mm");
         
         jLabel3.setText(usrname);
         jTextPane1.setEditable(false);
         jTextPane1.setText("Bem-vindo à sala de chat!");
-        
+        this.IP = IP;
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -129,13 +136,13 @@ public class ChatRoom extends javax.swing.JFrame {
                             .addComponent(jButton1)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 88, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(272, 272, 272)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(256, 256, 256)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
@@ -143,7 +150,7 @@ public class ChatRoom extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addGap(244, 244, 244))
+                .addGap(249, 249, 249))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +191,7 @@ public class ChatRoom extends javax.swing.JFrame {
             Logger.getLogger(ChatRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            publicador.mcsend("* " + usrname + " *" + ": " + jTextField1.getText(), InetAddress.getByName("225.0.0.0"));
+            publicador.mcsend("[" + sdf.format(cal.getTime()) + "]" + "* " + usrname + " *" + " : " + jTextField1.getText(), InetAddress.getByName(IP));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ChatRoom.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

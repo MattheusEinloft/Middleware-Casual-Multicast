@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mattheus/Documents/GitHub/MiddlewareCasualMulticast/src/causalmulticast/Main.java</file>
+            <file>file:/C:/Users/Eduardo/Desktop/UNIVERSIDADE/SistemasDistribuidos/ChatRoom/Middleware-Casual-Multicast/src/causalmulticast/MulticastReceiver.java</file>
+            <file>file:/C:/Users/Eduardo/Desktop/UNIVERSIDADE/SistemasDistribuidos/ChatRoom/Middleware-Casual-Multicast/src/causalmulticast/InterfaceMulticast.java</file>
+            <file>file:/C:/Users/Eduardo/Desktop/UNIVERSIDADE/SistemasDistribuidos/ChatRoom/Middleware-Casual-Multicast/src/causalmulticast/MulticastPublisher.java</file>
+            <file>file:/C:/Users/Eduardo/Desktop/UNIVERSIDADE/SistemasDistribuidos/ChatRoom/Middleware-Casual-Multicast/src/view/TelaInicial.java</file>
+            <file>file:/C:/Users/Eduardo/Desktop/UNIVERSIDADE/SistemasDistribuidos/ChatRoom/Middleware-Casual-Multicast/src/causalmulticast/Main.java</file>
+            <file>file:/C:/Users/Eduardo/Desktop/UNIVERSIDADE/SistemasDistribuidos/ChatRoom/Middleware-Casual-Multicast/src/view/ChatRoom.java</file>
         </group>
     </open-files>
 </project-private>
